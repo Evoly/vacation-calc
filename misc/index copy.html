@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@3.6.0/cdn.min.js"></script>
+    <script type="module">
+        import { differenceInMonths } from "https://unpkg.com/date-fns/differenceInMonths.mjs";
+    </script>
+</head>
+
+<body>
+    <style>
+        .main {
+            width: 1620px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .content {
+            display: grid;
+        }
+        .person-block__header {
+            display: flex;
+        }
+
+    </style>
+    <script>
+        const stuff = [
+            {
+                "Таб.№": 15,
+                "Принят": "01.02.2020",
+                "Уволен": "x",
+                "ФИО": "Калугин Николай Александрович",
+                "Отпуск": [{
+                    "Дата с": "16.06.2020",
+                    "Дата по": "13.07.2020",
+                    "Дней": 15
+                }, {
+                    "Дата с": "18.06.2021",
+                    "Дата по": "13.07.2021",
+                    "Дней": 15
+                }],
+            },
+            {
+                "Таб.№": 4,
+                "Принят": "01.10.2017",
+                "Уволен": "x",
+                "ФИО": "Маканов Константин Николаевич",
+                "Отпуск": [{
+                    "Дата с": "01.04.2021",
+                    "Дата по": "14.04.2021",
+                    "Дней": 14
+                },]
+            },
+        ];
+        const data = stuff;     
+    </script>
+    <div class="main" id="main">
+        <h1>Some header here</h1>
+        <a
+            href="https://www.30secondsofcode.org/js/s/date-difference/">https://www.30secondsofcode.org/js/s/date-difference/</a>
+        <template class="content" id="tmpl">
+            <div class="person-block">
+                <div class="person-block__header">
+                    <h2 class="" data-js="name"></h2>
+                    <div class="">Остаток отпуска: <span data-js="totalDays"> days </span> </div>
+                    <div class="icon icon-js">icon</div>
+                </div>
+                <div class="person-block__content">
+                    <h3 class="">Отпуска</h3>
+                    <div class="person-data" id="vocations">
+                        <div class="date" data-js="dateUp">from</div>
+                        <div class="date" data-js="dateTo">up to</div>
+                        <div class="date" data-js="days">days</div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <div class="content" id="content">
+
+        </div>
+        <script type="module">
+            import { differenceInMonths } from "https://unpkg.com/date-fns/differenceInMonths.mjs";
+            import { differenceInYears } from "https://unpkg.com/date-fns/differenceInYears.mjs";
+            //const { differenceInYears, differenceInMonths } = require("date-fns");
+            
+            
+            
+            console.log('data', data);
+            const container = document.getElementById('content');
+            const div = document.createElement('div');
+            //const h2 = document.createElement('h2');
+            const h3 = document.createElement('h3');
+            const span = document.createElement('span');
+
+
+            const daysDiff = (startDay, endDate) => {
+                const result = differenceInMonths(startDay, endDate);
+                console.log('result', result);
+
+                const difference = endDate - startDay;
+                console.log('diff:', difference, endDate, startDay)
+                if (difference < 0) return 'smth wrong with dates';
+
+                const diffYears = endDate.getFullYear() - startDay.getFullYear();
+                let months = 0;
+                let years = diffYears;
+                console.log(startDay.getFullYear() + diffYears, 'dif', diffYears);
+                if (startDay + diffYears > endDate) {
+                    years -= 1;
+                    months += 1;
+                };
+
+                const days = difference / (24 * 60 * 60 * 1000) - (years * 365);
+                months += endDate.getMonth() - startDay.getMonth();
+
+                console.log(days, months, years);
+                return [days, months, years];
+            }
+
+            data.map((el, index) => {
+                console.log('el', el["ФИО"]);
+
+                const currentDate = new Date;
+
+                const test = el['Принят'].split('.').reverse();
+
+                const startDate = new Date(test);
+
+                daysDiff(startDate, currentDate);
+
+                container.append(tmpl.content.cloneNode(true));
+                main.append(container);
+
+                const h2 = container.querySelectorAll('[data-js="name"]')
+                h2[index].append(el["ФИО"]);
+
+                
+
+                //vocations
+                console.log('vocation', el["Отпуск"]);
+                el["Отпуск"].map( (vocation, index) => {
+                    console.log(vocation);
+                })
+
+                //const vocations = 
+
+
+            });
+
+            const isLeapYear = (year) => {
+                    const result = year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
+                    return result;
+                };
+        </script>
+
+
+    </div>
+</body>
+
+</html>
