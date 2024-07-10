@@ -44,7 +44,7 @@ const exelObj = newData.reduce((acc, el) => {
     return acc;
 }, []);
 
-const dataForJs = `const data = ${JSON.stringify(newData)}; const currentDate = "${currentDate.toLocaleDateString() }"; export {data, currentDate}`;
+const dataForJs = `const data = ${JSON.stringify(newData)}; const currentDate = "${currentDate.toLocaleDateString()}"`;
 
 fs.writeFile('../data.js', dataForJs, err => {
     if (err) {
@@ -61,6 +61,7 @@ fs.writeFile('../to-exel.json', JSON.stringify(exelObj), err => {
         console.log('done');
     }
 });
+
 
 
 

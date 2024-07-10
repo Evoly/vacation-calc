@@ -1,4 +1,4 @@
-import { data, currentDate } from './data.js';
+//import { data, currentDate } from './data.js';
 
 const container = document.getElementById('content');
 const div = document.createElement('div');
@@ -7,14 +7,16 @@ const span = document.createElement('span');
 
 const h1 = document.querySelector('[data-js="currentDate"]');
 
-const dateH1 = currentDate.split('/');
-const h1Month = dateH1[0].length === 1 ? `0${dateH1[0]}` : dateH1[0];
-h1.append(`${dateH1[1]}.${h1Month}.${dateH1[2]}`);
+//TODO: check in linux currentDate.toLocaleDateString()
+//const dateH1 = currentDate.split('/');
+//const h1Month = dateH1[0].length === 1 ? `0${dateH1[0]}` : dateH1[0];
+
+h1.append(currentDate);
 
 const excludedPerson = ['Маканов', 'Семенко'];
 const daysPerYear = 28;
 
-const timeRecord = { //todo
+const timeRecord = { //todo DEL
     fullYears: [],
     months: [],
     days: [],
